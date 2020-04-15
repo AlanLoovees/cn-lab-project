@@ -37,6 +37,8 @@ con()
 response = vid()
 if response == "true":
     vote()
+elif response == "done":
+    print("You can only cast your vote once!")
 else:
     print("Not eligible to vote!")
 close()

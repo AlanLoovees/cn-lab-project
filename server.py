@@ -5,12 +5,14 @@ import threading
 global flag
 global true
 global false
+global done
 global print_lock
 
 print_lock = threading.Lock()
 
 true = bytes("true", 'utf-8')
 false = bytes("false", 'utf-8')
+done = bytes("done", 'utf-8')
 
 def con():
     global sock
@@ -32,13 +34,20 @@ def recieve(connection):
         data = connection.recv(1024)
         s = str(data, 'utf-8')
         with open('voters_list.txt','r') as voters:
-            flag = 0
+            flag = -1
             for line in voters:
                 for word in line.split():
                     if s == word:
-                        flag = 1
-                        connection.sendall(true)
+                        flag = 0
+                        with open('votes.txt','r') as votes:
+                            for vote in votes:
+                                for voted in vote.split():
+                                    if s == voted:
+                                        flag = 1
+                                        connection.sendall(done)
         if flag == 0:
+            connection.sendall(true)
+        if flag == -1:
             connection.sendall(false)
             print_lock.release()
             break
@@ -52,7 +61,7 @@ def recieve(connection):
                         flag = 1
                         connection.sendall(true)
                         f = open('votes.txt','a')
-                        f.write(s+" "+cand)
+                        f.write(s+" "+cand+"\n")
                         f.close()
         if flag == 0:
             connection.sendall(false)
