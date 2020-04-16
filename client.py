@@ -1,4 +1,6 @@
+import time
 import socket
+from flask import Flask, render_template, request, redirect
 
 def con():
     global sock
@@ -7,8 +9,7 @@ def con():
     print('connecting to {} port {}'.format(*server_address))
     sock.connect(server_address)
 
-def vid():
-    id = input("Enter the voter id: ")
+def vid(id):
     message = bytes(id, 'utf-8')
     sock.send(message)
     exists = recieve()
@@ -19,26 +20,45 @@ def recieve():
         data = sock.recv(1024)
         return str(data, 'utf-8')
 
-def vote():
-    id = input("Candidate that you vote for: ")
+def vote(id):
     message = bytes(id, 'utf-8')
     sock.send(message)
     exists = recieve()
-    if(exists == "false"):
-        print("Candidate does not exist!")
-    else:
-        print('Thank you for voting!')
+    return exists
 
 def close():
     sock.send(bytes("exit",'utf-8'))    
     sock.close()
 
-con()
-response = vid()
-if response == "true":
-    vote()
-elif response == "done":
-    print("You can only cast your vote once!")
-else:
-    print("Not eligible to vote!")
-close()
+app = Flask(__name__)
+
+@app.route('/', methods=['POST', 'GET'])
+def voter():
+    con()
+    if request.method == 'POST':
+        voter_id = request.form['voter_id']
+        response = vid(voter_id)
+        if response == "true":
+            return redirect('/vote')
+        elif response == "done":
+            return "Already Voted!"
+        else:
+            return "Not eligible to vote!"
+    else:
+        return render_template("voter.html")
+
+@app.route('/vote', methods=['POST', 'GET'])
+def candidate():
+    if request.method == 'POST':
+        candidate_id = request.form['candidate_id']
+        response = vote(candidate_id)
+        if response == "false":
+            return "Candidate does not exist!"
+        else:
+            close()
+            return render_template("thank.html")
+    else:
+        return render_template("candidate.html")
+
+if __name__ == "__main__":
+    app.run(debug=True)
