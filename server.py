@@ -17,7 +17,7 @@ done = bytes("done", 'utf-8')
 def con():
     global sock
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_address = ('localhost', 8000)
+    server_address = ('localhost', 9997)
     print('Starting up on {} port {}'.format(*server_address))
     sock.bind(server_address)
     sock.listen(5)
