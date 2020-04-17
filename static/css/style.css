@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 
 body{
@@ -6,9 +6,8 @@ body{
     background-size: auto;
     padding-top: 20px;
     margin: 50px;
+    font-family: 'Montserrat', sans-serif;
 }
-
-
 
 .box{
     align-content: center;
@@ -20,5 +19,14 @@ body{
     margin: auto;
 }
 
+.image{
+    max-width: 20%;
+}
 
+.input{
+    max-width: 15%;
+}
 
+.thank{
+    margin: 10rem;
+}

@@ -34,6 +34,10 @@ app = Flask(__name__)
 
 @app.route('/', methods=['POST', 'GET'])
 def voter():
+    try:
+        close()
+    except:
+        pass
     con()
     if request.method == 'POST':
         voter_id = request.form['voter_id']
