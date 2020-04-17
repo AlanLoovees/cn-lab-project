@@ -1,11 +1,11 @@
 import time
 import socket
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect , url_for
 
 def con():
     global sock
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_address = ('localhost', 8000)
+    server_address = ('localhost', 9997)
     print('connecting to {} port {}'.format(*server_address))
     sock.connect(server_address)
 
@@ -34,6 +34,10 @@ app = Flask(__name__)
 
 @app.route('/', methods=['POST', 'GET'])
 def voter():
+    try:
+        close()
+    except:
+        pass
     con()
     if request.method == 'POST':
         voter_id = request.form['voter_id']
