@@ -18,7 +18,8 @@
         <br>
         <form action="/vote" method="POST">
             <div class="col-xs-3">
-            <input id="input" class="form-control input" type="text" placeholder="Candidate to vote for" name="candidate_id" onkeyup="btnVote()">
+                <p style="color: red;">{{ message }}</p>
+                <input id="input" class="form-control input" type="text" placeholder="Candidate to vote for" name="candidate_id" onkeyup="btnVote()">
         </div>
             <br>
             <button id="submit" type="submit" class="btn btn-primary mb-2" value="vote" disabled="disabled">Vote</button>

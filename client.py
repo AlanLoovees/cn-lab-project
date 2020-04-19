@@ -45,9 +45,9 @@ def voter():
         if response == "true":
             return redirect('/vote')
         elif response == "done":
-            return "Already Voted!"
+            return render_template("voter.html", message="Already Voted!")
         else:
-            return "Not eligible to vote!"
+            return render_template("voter.html", message="Not eligible to vote!")
     else:
         return render_template("voter.html")
 
@@ -57,7 +57,7 @@ def candidate():
         candidate_id = request.form['candidate_id']
         response = vote(candidate_id)
         if response == "false":
-            return "Candidate does not exist!"
+            return render_template("voter.html", message="Candidate does not exist!")
         else:
             close()
             return render_template("thank.html")
