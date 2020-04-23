@@ -30,3 +30,7 @@ body{
 .thank{
     margin: 10rem;
 }
+
+td{
+    text-align: center;
+}
