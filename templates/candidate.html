@@ -16,10 +16,35 @@
         <br><br><br>
         <h3>Please select a candidate</h3>
         <br>
+        <table style=" width: 25%; text-align: center;" >
+            
+            <tr>
+              <th>Candidate Id</th>
+              <th>Candidate Name</th>
+            </tr>
+            <tr>
+              <td>C1</td>
+              <td>Micheal Bennet</td>
+            </tr>
+            <tr>
+                <td>C2</td>
+                <td> Joseph R. Biden</td>
+              </tr>
+              <tr>
+                <td>C3</td>
+                <td>Michael R. Bloomberg</td>
+              </tr>
+              <tr>
+                <td>C4</td>
+                <td>Cory Booker</td>
+              </tr>
+
+        </table>
+        <br>
         <form action="/vote" method="POST">
             <div class="col-xs-3">
                 <p style="color: red;">{{ message }}</p>
-                <input id="input" class="form-control input" type="text" placeholder="Candidate to vote for" name="candidate_id" onkeyup="btnVote()">
+                <input id="input" class="form-control input" type="text" placeholder="Enter Candidate Id" name="candidate_id" onkeyup="btnVote()">
         </div>
             <br>
             <button id="submit" type="submit" class="btn btn-primary mb-2" value="vote" disabled="disabled">Vote</button>
